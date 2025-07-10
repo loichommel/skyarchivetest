@@ -12,35 +12,10 @@
     <link rel="shortcut icon" href="img/icons/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Added for icons in header -->
 </head>
 <body>
-    <header>
-        <div class="container">
-            <nav>
-                <a href="index.html" class="logo">
-                    <img src="img/icons/SkyArchive_logo_bright.png" alt="SkyArchive Logo" class="logo-icon">SkyArchive
-                </a>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="index.html#about">About</a></li>
-                    <li><a href="index.html#map">Interactive Map</a></li>
-                    <li><a href="index.html#panoramas">Featured Panoramas</a></li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropbtn">Gallery <i class="fas fa-caret-down"></i></a>
-                        <div class="dropdown-content">
-                            <a href="gallery.html">Panorama Gallery</a>
-                            <a href="astro-gallery.html">Astro Gallery</a>
-                        </div>
-                    </li>
-                    <li><a href="index.html#data">SQM Data</a></li>
-                    <li><a href="index.html#equipment">Equipment</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
 
     <main class="gallery-container">
         <div class="container">
@@ -62,6 +37,35 @@
     <script src="js/services/uiUtils.js"></script>
     <script src="js/script.js"></script>
     <script>
+        // Load Header
+        fetch('_header.html')
+            .then(response => response.text())
+            .then(data => {
+                const headerPlaceholder = document.getElementById('header-placeholder');
+                if (headerPlaceholder) {
+                    headerPlaceholder.innerHTML = data;
+                    // Initialize mobile menu and language switcher
+                    if (typeof SkyArchiveUIUtils !== 'undefined' && SkyArchiveUIUtils.initMobileMenu) {
+                         SkyArchiveUIUtils.initMobileMenu();
+                    }
+                    if (typeof setLanguage === 'function' && typeof loadTranslations === 'function' && typeof updateLanguageSwitcherDisplay === 'function') {
+                        const languageDropdown = document.getElementById('languageDropdown');
+                        if (languageDropdown) {
+                            languageDropdown.addEventListener('click', (event) => {
+                                if (event.target.tagName === 'A' && event.target.dataset.lang) {
+                                    event.preventDefault();
+                                    setLanguage(event.target.dataset.lang);
+                                }
+                            });
+                        }
+                        // loadTranslations(localStorage.getItem('language') || 'en');
+                        // updateLanguageSwitcherDisplay();
+                    }
+                }
+            })
+            .catch(error => console.error('Error loading header:', error));
+
+        // Load Footer
         fetch('_footer.html')
             .then(response => response.text())
             .then(data => {

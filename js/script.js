@@ -30,13 +30,43 @@ async function loadTranslations(lang) {
 function applyTranslations() {
     document.querySelectorAll('[data-translate-key]').forEach(element => {
         const key = element.getAttribute('data-translate-key');
+        const attributeToTranslate = element.getAttribute('data-translate-attr');
+
         if (translations[key]) {
-            // Handle elements that might have child nodes (like the gallery dropdown caret)
-            if (element.childNodes.length > 1 && element.firstChild.nodeType === Node.TEXT_NODE) {
-                element.firstChild.textContent = translations[key] + ' '; // Add space for caret
+            if (attributeToTranslate) {
+                // Translate a specified attribute (e.g., title, alt, aria-label)
+                element.setAttribute(attributeToTranslate, translations[key]);
             } else {
-                element.textContent = translations[key];
+                // Default to translating textContent
+                // Make the childNodes check more specific to avoid unintended consequences
+                if (element.childNodes.length > 1 && element.firstChild.nodeType === Node.TEXT_NODE && element.querySelector('i.fas.fa-caret-down')) {
+                    element.firstChild.textContent = translations[key] + ' '; // Add space for caret, specific to nav dropdowns
+                } else {
+                    // For HTML content that might include tags like <i> for icons within a translatable string.
+                    // If the translation value is expected to be HTML, use innerHTML.
+                    // Otherwise, for plain text, textContent is safer.
+                    // Assuming translations are plain text for now unless a specific need for HTML arises.
+                    // For example, if a key like map.legend.description1 contains <i> tags, this would strip them.
+                    // The current translation files seem to be plain text, but the description1 key includes <i> tags in the HTML.
+                    // This needs careful handling. If translations can contain HTML, innerHTML is needed for those.
+                    // For now, let's assume translations are text, and HTML in source is preserved if not part of the key.
+                    // The current problem is that `map.legend.description1` in `index.html` has HTML tags INSIDE the <p>
+                    // and the key `map.legend.description1` in `en.json` also CONTAINS these HTML tags.
+                    // In this specific case, using .innerHTML for this key would be appropriate.
+                    // Generalizing this is hard. A specific attribute like `data-translate-type="html"` could be used.
+                    // Or, if a translation string starts with '<' and ends with '>', assume it's HTML.
+
+                    // Let's refine the logic: if the key is one of those known to contain HTML, use innerHTML.
+                    const keysWithHtml = ["map.legend.description1"]; // Add other keys if they also contain HTML
+                    if (keysWithHtml.includes(key)) {
+                        element.innerHTML = translations[key];
+                    } else {
+                        element.textContent = translations[key];
+                    }
+                }
             }
+        } else {
+            // console.warn(`Translation key not found: ${key}`); // Optional: for debugging
         }
     });
     // Update the language attribute of the html tag
