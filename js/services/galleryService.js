@@ -242,7 +242,7 @@ const SkyArchiveGalleryService = (() => {
         });
     }
 
-    // Initializes the main panorama gallery on gallery.html.
+    // Initializes the main panorama gallery on panorama-gallery.html.
     function initGallery(processedData) {
         const galleryGrid = document.querySelector('.gallery-grid');
         if (!galleryGrid) return null;

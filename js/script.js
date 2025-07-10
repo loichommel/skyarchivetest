@@ -187,8 +187,8 @@ function initializeUI(allData) {
             console.log("Initializing featured astrophoto gallery via GalleryService...");
             SkyArchiveGalleryService.initFeaturedAstroGallery(astroData, MAX_FEATURED_ASTROPHOTOS);
         }
-        // Panorama Gallery Page (gallery.html)
-        if (document.querySelector('main.gallery-container .gallery-grid') && window.location.pathname.includes('gallery.html')) {
+        // Panorama Gallery Page (panorama-gallery.html)
+        if (document.querySelector('main.gallery-container .gallery-grid') && window.location.pathname.includes('panorama-gallery.html')) {
             console.log("Initializing panorama gallery page via GalleryService...");
             SkyArchiveGalleryService.initGallery(panoData);
         }
@@ -269,7 +269,7 @@ function clearStaticContent() {
     if (astroSliderList) astroSliderList.innerHTML = '';
 
     const panoGalleryGrid = document.querySelector('main.gallery-container .gallery-grid');
-    if (panoGalleryGrid && window.location.pathname.includes('gallery.html')) panoGalleryGrid.innerHTML = '';
+    if (panoGalleryGrid && window.location.pathname.includes('panorama-gallery.html')) panoGalleryGrid.innerHTML = '';
 
     const astroGalleryGrid = document.querySelector('main.gallery-container .astro-gallery-grid');
     if (astroGalleryGrid && window.location.pathname.includes('astro-gallery.html')) astroGalleryGrid.innerHTML = '';
@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error("SkyArchiveDataService is not available. Data will not be loaded.");
         const bodyElement = document.querySelector('body');
-        if (bodyElement && (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('gallery.html') || window.location.pathname.endsWith('astro-gallery.html'))) {
+        if (bodyElement && (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('panorama-gallery.html') || window.location.pathname.endsWith('astro-gallery.html'))) {
             let errorContainer = document.getElementById('main-error-container');
             if (!errorContainer) {
                 errorContainer = document.createElement('div');
