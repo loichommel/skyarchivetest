@@ -95,5 +95,14 @@
   "contact.team.description": "Have questions or want to collaborate? Reach out to us:",
   "contact.team.button": "Send us an Email",
   "gallery.pano.description": "Browse the full archive of 360° night sky panoramas.",
-  "gallery.astro.description": "A collection of deep sky images and celestial wonders captured with a telescope from various locations."
+  "gallery.astro.description": "A collection of deep sky images and celestial wonders captured with a telescope from various locations.",
+  "viewer.loadingPanorama": "Loading Panorama...",
+  "viewer.backButtonTitle": "Go back to SkyArchive homepage",
+  "viewer.settingsButtonTitle": "Toggle Settings",
+  "viewer.settings.title": "Settings",
+  "viewer.settings.hotspotOpacityLabel": "Hotspot Opacity",
+  "viewer.settings.viewDataButton": "View Data",
+  "viewer.settings.viewDataButtonTitle": "View SQM data distribution",
+  "viewer.settings.viewMapLink": "View Map",
+  "viewer.settings.viewMapLinkTitle": "Go to Interactive Map"
 }
